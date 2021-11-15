@@ -27,6 +27,16 @@ function addBookToLibrary(title, author, pages, read){
   removeButton.addEventListener('click', e => {
       removeBookFromLibrary(e.target.id)
    })
+  if (myLibrary[myLibrary.length - 1].read !== "Read"){
+    readButton = document.createElement('button')
+    readButton.innerHTML = "Read"
+    addedBook.appendChild(readButton)
+    readButton.setAttribute('id',`${myLibrary.length-1}read`);
+    readButton.classList.add('readButtons')
+    readButton.addEventListener('click', e => {
+        updateRead(e.target.id)
+     })
+  }
 }
 
 function removeBookFromLibrary(bookID){
@@ -82,8 +92,26 @@ form.addEventListener("submit", e =>{
   toggleModal()
 })
 
-addBookToLibrary("re","rare",444,"Read")
-addBookToLibrary("rfere","rare",444,"Read")
+function updateRead(readButtonID){
+  console.log("updating read")
+  id = parseInt(readButtonID.charAt(0))
+  myLibrary[id].read = "Read"
+  addedBook = document.getElementById(`${id}div`)
+  addedBook.innerHTML = `${myLibrary[id].title}<br>${myLibrary[id].author}<br>${myLibrary[id].pages} Pages<br>${myLibrary[id].read}`
+  removeButton = document.createElement('button')
+  removeButton.innerHTML = "Remove"
+  addedBook.appendChild(removeButton)
+  removeButton.setAttribute('id',`${id}`);
+  removeButton.classList.add('removeButtons')
+  removeButton.addEventListener('click', e => {
+      removeBookFromLibrary(e.target.id)
+   })
+
+
+}
+
+addBookToLibrary("re","rare",444,"Not Read")
+addBookToLibrary("rfere","rare",444,"Not Read")
 addBookToLibrary("afdsre","rare",444,"Read")
 addBookToLibrary("rrfafddde","rare",444,"Read")
 
